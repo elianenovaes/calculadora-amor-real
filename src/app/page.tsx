@@ -27,11 +27,16 @@ export default function LoveCalculator() {
   useEffect(() => {
     setIsClient(true);
     // Verificar se os termos já foram aceitos anteriormente
-    const termsAccepted = localStorage.getItem("loveCalcTermsAccepted");
-    if (termsAccepted === "true") {
-      setAcceptedTerms(true);
-      setShowTerms(false);
-    } else {
+    try {
+      const termsAccepted = localStorage.getItem("loveCalcTermsAccepted");
+      if (termsAccepted === "true") {
+        setAcceptedTerms(true);
+        setShowTerms(false);
+      } else {
+        setShowTerms(true);
+      }
+    } catch (error) {
+      // Se localStorage não estiver disponível, mostrar termos
       setShowTerms(true);
     }
   }, []);
@@ -181,8 +186,13 @@ export default function LoveCalculator() {
     setAcceptedTerms(true);
     setShowTerms(false);
     // Salvar no localStorage para não mostrar novamente
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("loveCalcTermsAccepted", "true");
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem("loveCalcTermsAccepted", "true");
+      }
+    } catch (error) {
+      // Ignorar erro se localStorage não estiver disponível
+      console.log("localStorage não disponível");
     }
   };
 
