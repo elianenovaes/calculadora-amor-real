@@ -15,7 +15,7 @@ interface Result {
 
 export default function LoveCalculator() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [showTerms, setShowTerms] = useState(true);
+  const [showTerms, setShowTerms] = useState(false);
   const [name1, setName1] = useState("");
   const [name2, setName2] = useState("");
   const [result, setResult] = useState<Result | null>(null);
@@ -26,18 +26,15 @@ export default function LoveCalculator() {
   // Garantir que estamos no cliente antes de acessar localStorage
   useEffect(() => {
     setIsClient(true);
-  }, []);
-
-  // Verificar se os termos já foram aceitos anteriormente (localStorage)
-  useEffect(() => {
-    if (isClient) {
-      const termsAccepted = localStorage.getItem("loveCalcTermsAccepted");
-      if (termsAccepted === "true") {
-        setAcceptedTerms(true);
-        setShowTerms(false);
-      }
+    // Verificar se os termos já foram aceitos anteriormente
+    const termsAccepted = localStorage.getItem("loveCalcTermsAccepted");
+    if (termsAccepted === "true") {
+      setAcceptedTerms(true);
+      setShowTerms(false);
+    } else {
+      setShowTerms(true);
     }
-  }, [isClient]);
+  }, []);
 
   const getRandomPercentage = () => Math.floor(Math.random() * 101);
 
@@ -183,8 +180,8 @@ export default function LoveCalculator() {
   const handleAcceptTerms = () => {
     setAcceptedTerms(true);
     setShowTerms(false);
-    // Salvar no localStorage para não mostrar novamente (apenas no cliente)
-    if (isClient) {
+    // Salvar no localStorage para não mostrar novamente
+    if (typeof window !== 'undefined') {
       localStorage.setItem("loveCalcTermsAccepted", "true");
     }
   };
