@@ -121,16 +121,12 @@ export default function LoveCalculator() {
       monthly: 19.90
     };
 
-    const confirmPurchase = window.confirm(
-      `🔐 Pagamento de R$ ${prices[type].toFixed(2)}\n\n` +
-      `${type === 'single' ? 'Análise Premium Completa' : 'Assinatura Mensal'}\n\n` +
-      `Continuar?`
-    );
-
-    if (confirmPurchase) {
+    const message = `🔐 Pagamento de R$ ${prices[type].toFixed(2)}\n\n${type === 'single' ? 'Análise Premium Completa' : 'Assinatura Mensal'}\n\nContinuar?`;
+    
+    if (typeof window !== 'undefined' && window.confirm(message)) {
       setTimeout(() => {
         setIsPremium(true);
-        alert(`🎉 Pagamento aprovado!\n\nAnálise Premium desbloqueada com sucesso!`);
+        alert('🎉 Pagamento aprovado!\n\nAnálise Premium desbloqueada com sucesso!');
       }, 1000);
     }
   };
