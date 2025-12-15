@@ -115,20 +115,9 @@ export default function LoveCalculator() {
     }
   };
 
-  const handlePurchase = (type: 'single' | 'monthly') => {
-    const prices = {
-      single: 0.99,
-      monthly: 19.90
-    };
-
-    const message = `🔐 Pagamento de R$ ${prices[type].toFixed(2)}\n\n${type === 'single' ? 'Análise Premium Completa' : 'Assinatura Mensal'}\n\nContinuar?`;
-    
-    if (typeof window !== 'undefined' && window.confirm(message)) {
-      setTimeout(() => {
-        setIsPremium(true);
-        alert('🎉 Pagamento aprovado!\n\nAnálise Premium desbloqueada com sucesso!');
-      }, 1000);
-    }
+  const handlePurchase = () => {
+    setIsPremium(true);
+    alert('🎉 Análise Premium desbloqueada!');
   };
 
   return (
@@ -289,21 +278,14 @@ export default function LoveCalculator() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <button
-                      onClick={() => handlePurchase('single')}
+                      onClick={handlePurchase}
                       className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                     >
-                      💳 Comprar por R$ 0,99
-                    </button>
-                    <button
-                      onClick={() => handlePurchase('monthly')}
-                      className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-                    >
-                      ⭐ Mensal R$ 19,90
+                      🔓 Desbloquear Agora
                     </button>
                   </div>
                   <p className="text-yellow-300 text-xs mt-3">
-                    ⚡ Acesso instantâneo • 🔒 Pagamento seguro • ✓ Garantia de
-                    satisfação
+                    ⚡ Acesso instantâneo • 🔒 100% Seguro • ✓ Satisfação garantida
                   </p>
                 </div>
               )}
