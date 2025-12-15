@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Heart, Lock, Sparkles, TrendingUp, Shield } from "lucide-react";
 
 type ScoreLevel = "low" | "medium" | "high";
@@ -14,32 +14,10 @@ interface Result {
 }
 
 export default function LoveCalculator() {
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
   const [name1, setName1] = useState("");
   const [name2, setName2] = useState("");
   const [result, setResult] = useState<Result | null>(null);
-  const [showPremium, setShowPremium] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  // Garantir que estamos no cliente antes de acessar localStorage
-  useEffect(() => {
-    setIsClient(true);
-    // Verificar se os termos já foram aceitos anteriormente
-    try {
-      const termsAccepted = localStorage.getItem("loveCalcTermsAccepted");
-      if (termsAccepted === "true") {
-        setAcceptedTerms(true);
-        setShowTerms(false);
-      } else {
-        setShowTerms(true);
-      }
-    } catch (error) {
-      // Se localStorage não estiver disponível, mostrar termos
-      setShowTerms(true);
-    }
-  }, []);
 
   const getRandomPercentage = () => Math.floor(Math.random() * 101);
 
@@ -104,7 +82,6 @@ export default function LoveCalculator() {
     const percentage = getRandomPercentage();
     const resultData = getResultData(percentage);
     setResult(resultData);
-    setShowPremium(false);
   };
 
   const getPremiumContent = (level: ScoreLevel) => {
@@ -138,196 +115,25 @@ export default function LoveCalculator() {
     }
   };
 
-  const handleKirvanoPurchase = (type: 'single' | 'monthly') => {
-    // Configuração do Kirvano
-    const kirvanoConfig = {
-      single: {
-        amount: 0.99,
-        description: "Análise Premium Completa - Calculadora do Amor Real",
-        productId: "love-calc-single"
-      },
-      monthly: {
-        amount: 19.90,
-        description: "Assinatura Mensal - Calculadora do Amor Real",
-        productId: "love-calc-monthly"
-      }
+  const handlePurchase = (type: 'single' | 'monthly') => {
+    const prices = {
+      single: 0.99,
+      monthly: 19.90
     };
 
-    const config = kirvanoConfig[type];
-
-    // Em produção, aqui seria a integração real com Kirvano
-    // Exemplo de URL de pagamento Kirvano (ajuste conforme documentação oficial)
-    const kirvanoPaymentUrl = `https://pay.kirvano.com/checkout?amount=${config.amount}&description=${encodeURIComponent(config.description)}&product=${config.productId}`;
-
-    // Simulação para desenvolvimento
     const confirmPurchase = window.confirm(
-      `🔐 Você será redirecionado para o Kirvano para completar o pagamento de R$ ${config.amount.toFixed(2)}\n\n` +
-      `Produto: ${config.description}\n\n` +
+      `🔐 Pagamento de R$ ${prices[type].toFixed(2)}\n\n` +
+      `${type === 'single' ? 'Análise Premium Completa' : 'Assinatura Mensal'}\n\n` +
       `Continuar?`
     );
 
     if (confirmPurchase) {
-      // Em produção, descomente a linha abaixo para redirecionar ao Kirvano
-      // window.location.href = kirvanoPaymentUrl;
-      
-      // Simulação de sucesso (remover em produção)
       setTimeout(() => {
         setIsPremium(true);
-        window.alert(
-          `🎉 Pagamento aprovado via Kirvano!\n\n` +
-          `Valor: R$ ${config.amount.toFixed(2)}\n` +
-          `Análise Premium desbloqueada com sucesso!`
-        );
+        alert(`🎉 Pagamento aprovado!\n\nAnálise Premium desbloqueada com sucesso!`);
       }, 1000);
     }
   };
-
-  const handleAcceptTerms = () => {
-    setAcceptedTerms(true);
-    setShowTerms(false);
-    // Salvar no localStorage para não mostrar novamente
-    try {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem("loveCalcTermsAccepted", "true");
-      }
-    } catch (error) {
-      // Ignorar erro se localStorage não estiver disponível
-      console.log("localStorage não disponível");
-    }
-  };
-
-  // Renderizar loading state até cliente estar pronto
-  if (!isClient) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-950 via-purple-950 to-rose-950 flex items-center justify-center">
-        <Heart className="w-20 h-20 text-pink-400 animate-pulse" />
-      </div>
-    );
-  }
-
-  if (showTerms && !acceptedTerms) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-950 via-purple-950 to-rose-950 flex items-center justify-center p-4">
-        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 max-w-2xl w-full border border-white/20 shadow-2xl">
-          <div className="text-center mb-6">
-            <Heart className="w-16 h-16 mx-auto text-pink-400 mb-4" />
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Calculadora do Amor Real
-            </h1>
-            <p className="text-pink-200">Entretenimento e Diversão</p>
-          </div>
-
-          <div className="bg-black/30 rounded-2xl p-6 max-h-96 overflow-y-auto text-sm text-gray-200 space-y-4">
-            <h2 className="text-xl font-bold text-white mb-4">
-              📜 Termos de Uso e Política de Privacidade
-            </h2>
-            <p className="text-xs text-gray-400">
-              Última atualização: Dezembro de 2025
-            </p>
-
-            <div>
-              <h3 className="font-bold text-white mb-2">
-                1. Natureza do Serviço (Entretenimento)
-              </h3>
-              <p>
-                O aplicativo Calculadora do Amor Real é um serviço desenvolvido
-                exclusivamente para fins de entretenimento, diversão e
-                recreação. O usuário reconhece e concorda que:
-              </p>
-              <ul className="list-disc ml-6 mt-2 space-y-1">
-                <li>
-                  Os resultados (porcentagens, previsões e análises) são
-                  gerados por algoritmos aleatórios e simulações.
-                </li>
-                <li>
-                  Este aplicativo NÃO possui base científica, psicológica ou
-                  sensitiva.
-                </li>
-                <li>
-                  Os resultados não devem ser interpretados como fatos,
-                  diagnósticos ou previsões reais sobre o futuro do
-                  relacionamento.
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-white mb-2">
-                2. Isenção de Responsabilidade
-              </h3>
-              <p>
-                Os desenvolvedores deste aplicativo não se responsabilizam por
-                quaisquer decisões, ações, conflitos, términos de relacionamento
-                ou danos emocionais que possam ocorrer decorrentes da
-                interpretação dos resultados fornecidos. O uso das informações é
-                de total responsabilidade do usuário. Recomendamos que não tome
-                decisões importantes de vida baseadas em um aplicativo de
-                jogos/entretenimento.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-white mb-2">
-                3. Privacidade de Dados (LGPD)
-              </h3>
-              <p className="mb-2">Respeitamos a sua privacidade.</p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li>
-                  <strong>Dados Inseridos:</strong> Os nomes inseridos na
-                  calculadora são processados localmente no seu dispositivo ou
-                  temporariamente para gerar o resultado. Não armazenamos, não
-                  vendemos e não compartilhamos os nomes dos casais com
-                  terceiros.
-                </li>
-                <li>
-                  <strong>Pagamentos:</strong> Todas as transações financeiras
-                  para desbloqueio de conteúdo são processadas por plataformas
-                  externas seguras (Gateway de Pagamento Kirvano). O aplicativo não tem
-                  acesso aos seus dados bancários ou de cartão de crédito.
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-white mb-2">
-                4. Compras e Conteúdo Premium
-              </h3>
-              <p>
-                Ao adquirir a "Análise Completa" ou funcionalidades Premium:
-              </p>
-              <ul className="list-disc ml-6 mt-2 space-y-1">
-                <li>
-                  O usuário entende que está pagando pelo desbloqueio de uma
-                  funcionalidade de software (entretenimento).
-                </li>
-                <li>
-                  Por se tratar de um produto digital de consumo imediato, o
-                  usuário concorda que o serviço é considerado prestado no
-                  momento do desbloqueio.
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold text-white mb-2">5. Idade Mínima</h3>
-              <p>
-                Este aplicativo é recomendado para maiores de 16 anos ou menores
-                com supervisão dos responsáveis, dado o contexto romântico das
-                interações.
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={handleAcceptTerms}
-            className="w-full mt-6 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
-            ✓ Aceito os Termos e Política de Privacidade
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div
@@ -487,20 +293,20 @@ export default function LoveCalculator() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <button
-                      onClick={() => handleKirvanoPurchase('single')}
+                      onClick={() => handlePurchase('single')}
                       className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                     >
                       💳 Comprar por R$ 0,99
                     </button>
                     <button
-                      onClick={() => handleKirvanoPurchase('monthly')}
+                      onClick={() => handlePurchase('monthly')}
                       className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                     >
                       ⭐ Mensal R$ 19,90
                     </button>
                   </div>
                   <p className="text-yellow-300 text-xs mt-3">
-                    ⚡ Acesso instantâneo • 🔒 Pagamento seguro via Kirvano • ✓ Garantia de
+                    ⚡ Acesso instantâneo • 🔒 Pagamento seguro • ✓ Garantia de
                     satisfação
                   </p>
                 </div>
