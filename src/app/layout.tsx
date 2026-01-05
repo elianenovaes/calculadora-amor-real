@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Calculadora do Amor Real",
+  title: "Calculadora Amor Real",
   description: "Descubra a compatibilidade do seu amor",
 };
 

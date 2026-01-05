@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Heart, Lock, Sparkles, TrendingUp, Shield } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Heart, Lock, Sparkles, TrendingUp, Shield, X, ArrowLeft, Home } from "lucide-react";
 
 type ScoreLevel = "low" | "medium" | "high";
 
@@ -18,6 +18,25 @@ export default function LoveCalculator() {
   const [name2, setName2] = useState("");
   const [result, setResult] = useState<Result | null>(null);
   const [isPremium, setIsPremium] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+  // Verificar se é a primeira vez que o usuário acessa
+  useEffect(() => {
+    const hasAcceptedTerms = localStorage.getItem("loveCalculatorTermsAccepted");
+    if (!hasAcceptedTerms) {
+      setShowTerms(true);
+    } else {
+      setTermsAccepted(true);
+    }
+  }, []);
+
+  const acceptTerms = () => {
+    localStorage.setItem("loveCalculatorTermsAccepted", "true");
+    setTermsAccepted(true);
+    setShowTerms(false);
+  };
 
   const getRandomPercentage = () => Math.floor(Math.random() * 101);
 
@@ -115,10 +134,249 @@ export default function LoveCalculator() {
     }
   };
 
-  const handlePurchase = () => {
-    setIsPremium(true);
-    alert('🎉 Análise Premium desbloqueada!');
+  const handlePaymentClick = (plan: 'monthly' | 'annual') => {
+    // Abre o link de pagamento em nova aba
+    window.open('https://pay.kirvano.com/9b7ef0c7-fbe3-4121-81e3-098403e5a506', '_blank');
+    
+    // Simula o desbloqueio premium após alguns segundos (em produção, isso seria feito via webhook)
+    setTimeout(() => {
+      setIsPremium(true);
+      setShowPaymentModal(false);
+      alert('🎉 Bem-vindo ao Premium! Sua análise completa foi desbloqueada.');
+    }, 3000);
   };
+
+  const openPaymentModal = () => {
+    setShowPaymentModal(true);
+  };
+
+  const goBack = () => {
+    if (result) {
+      setResult(null);
+      setName1("");
+      setName2("");
+      setIsPremium(false);
+    }
+  };
+
+  const goHome = () => {
+    setResult(null);
+    setName1("");
+    setName2("");
+    setIsPremium(false);
+  };
+
+  // Modal de Termos de Uso
+  if (showTerms) {
+    return (
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-3xl p-8 max-w-2xl w-full border-2 border-pink-400/50 shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="text-center mb-6">
+            <Heart className="w-16 h-16 mx-auto text-pink-400 mb-4 animate-pulse" />
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Bem-vindo à Calculadora Amor Real
+            </h2>
+            <p className="text-pink-200">Por favor, leia e aceite os termos para continuar</p>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20 max-h-64 overflow-y-auto">
+            <h3 className="text-white font-bold text-lg mb-3">Termos de Uso</h3>
+            <div className="text-white/90 text-sm space-y-3">
+              <p>
+                <strong>1. Natureza do Aplicativo:</strong> Este é um aplicativo de entretenimento. 
+                Os resultados são gerados aleatoriamente e não possuem base científica, psicológica ou astrológica.
+              </p>
+              <p>
+                <strong>2. Uso Responsável:</strong> Não tome decisões importantes sobre relacionamentos 
+                baseando-se exclusivamente nos resultados desta calculadora.
+              </p>
+              <p>
+                <strong>3. Privacidade:</strong> Os nomes inseridos não são armazenados em nossos servidores. 
+                Apenas salvamos localmente que você aceitou estes termos.
+              </p>
+              <p>
+                <strong>4. Conteúdo Premium:</strong> O acesso premium desbloqueia análises fictícias 
+                adicionais para fins de entretenimento.
+              </p>
+              <p>
+                <strong>5. Idade Mínima:</strong> Este aplicativo é destinado a maiores de 13 anos.
+              </p>
+              <p>
+                <strong>6. Isenção de Responsabilidade:</strong> Não nos responsabilizamos por 
+                quaisquer decisões tomadas com base nos resultados fornecidos.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={acceptTerms}
+            className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg text-lg"
+          >
+            ✓ Aceito os Termos de Uso
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Modal de Pagamento
+  if (showPaymentModal) {
+    return (
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-3xl p-8 max-w-2xl w-full border-2 border-pink-400/50 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <button
+            onClick={() => setShowPaymentModal(false)}
+            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div className="text-center mb-8">
+            <TrendingUp className="w-16 h-16 mx-auto text-yellow-400 mb-4" />
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Escolha Seu Plano Premium
+            </h2>
+            <p className="text-pink-200">Desbloqueie todos os segredos do seu relacionamento</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Plano Mensal */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/20 hover:border-yellow-400/50 transition-all duration-300 transform hover:scale-105">
+              <div className="text-center mb-4">
+                <h3 className="text-2xl font-bold text-white mb-2">Plano Mensal</h3>
+                <div className="mb-4">
+                  <p className="text-white/60 text-sm line-through">De R$ 19,90</p>
+                  <p className="text-5xl font-bold text-yellow-400">R$ 9,90</p>
+                  <p className="text-white/80 text-sm mt-1">/mês</p>
+                </div>
+                <div className="bg-green-500/20 border border-green-400/50 rounded-lg py-2 px-4 inline-block">
+                  <p className="text-green-300 font-bold text-sm">🎉 50% de desconto!</p>
+                </div>
+              </div>
+
+              <ul className="text-white/90 text-sm space-y-3 mb-6">
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Análise completa de obstáculos</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Previsão de futuro detalhada</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Taxa de fidelidade revelada</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Acesso ilimitado por 30 dias</span>
+                </li>
+              </ul>
+
+              <button
+                onClick={() => handlePaymentClick('monthly')}
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                Assinar Mensal
+              </button>
+            </div>
+
+            {/* Plano Anual */}
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-yellow-400/50 hover:border-yellow-400 transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold py-1 px-4 rounded-bl-lg">
+                MAIS POPULAR
+              </div>
+
+              <div className="text-center mb-4 mt-4">
+                <h3 className="text-2xl font-bold text-white mb-2">Plano Anual</h3>
+                <div className="mb-4">
+                  <p className="text-white/60 text-sm line-through">De R$ 238,80</p>
+                  <p className="text-5xl font-bold text-yellow-400">R$ 108,00</p>
+                  <p className="text-white/80 text-sm mt-1">/ano</p>
+                  <p className="text-green-300 text-xs mt-2">Apenas R$ 9,00/mês</p>
+                </div>
+                <div className="bg-green-500/20 border border-green-400/50 rounded-lg py-2 px-4 inline-block">
+                  <p className="text-green-300 font-bold text-sm">🔥 Economize 55%!</p>
+                </div>
+              </div>
+
+              <ul className="text-white/90 text-sm space-y-3 mb-6">
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Tudo do plano mensal</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Acesso ilimitado por 12 meses</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Economia de R$ 10,80</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-400 mr-2">✓</span>
+                  <span>Melhor custo-benefício</span>
+                </li>
+              </ul>
+
+              <button
+                onClick={() => handlePaymentClick('annual')}
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+              >
+                Assinar Anual
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+            <h4 className="text-white font-bold text-center mb-4">O que você vai receber:</h4>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="text-center">
+                <Lock className="w-8 h-8 mx-auto text-yellow-400 mb-2" />
+                <p className="text-white/90 text-sm font-semibold">Análise dos Obstáculos</p>
+                <p className="text-white/60 text-xs mt-1">Descubra os desafios ocultos</p>
+              </div>
+              <div className="text-center">
+                <Sparkles className="w-8 h-8 mx-auto text-purple-400 mb-2" />
+                <p className="text-white/90 text-sm font-semibold">Previsão de Futuro</p>
+                <p className="text-white/60 text-xs mt-1">Veja o que o destino reserva</p>
+              </div>
+              <div className="text-center">
+                <Shield className="w-8 h-8 mx-auto text-blue-400 mb-2" />
+                <p className="text-white/90 text-sm font-semibold">Taxa de Fidelidade</p>
+                <p className="text-white/60 text-xs mt-1">Análise real de lealdade</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex gap-3">
+            <button
+              onClick={goBack}
+              className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-xl transition-all duration-300 border border-white/20 flex items-center justify-center gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Voltar
+            </button>
+            <button
+              onClick={goHome}
+              className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-xl transition-all duration-300 border border-white/20 flex items-center justify-center gap-2"
+            >
+              <Home className="w-4 h-4" />
+              Início
+            </button>
+          </div>
+
+          <p className="text-yellow-300 text-xs text-center mt-4">
+            ⚡ Acesso instantâneo • 🔒 Pagamento 100% Seguro • ✓ Satisfação garantida
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!termsAccepted) {
+    return null;
+  }
 
   return (
     <div
@@ -131,7 +389,7 @@ export default function LoveCalculator() {
         <div className="text-center mb-8">
           <Heart className="w-20 h-20 mx-auto text-pink-400 mb-4 animate-pulse" />
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            Calculadora do Amor Real
+            Calculadora Amor Real
           </h1>
           <p className="text-pink-200">Descubra a verdade sobre seu amor</p>
         </div>
@@ -276,31 +534,34 @@ export default function LoveCalculator() {
                     Descubra os segredos ocultos do seu relacionamento! Veja os
                     obstáculos reais, previsão de futuro e taxa de fidelidade.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                    <button
-                      onClick={handlePurchase}
-                      className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-                    >
-                      🔓 Desbloquear Agora
-                    </button>
-                  </div>
+                  <button
+                    onClick={openPaymentModal}
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  >
+                    🔓 Fazer Upgrade para Premium
+                  </button>
                   <p className="text-yellow-300 text-xs mt-3">
-                    ⚡ Acesso instantâneo • 🔒 100% Seguro • ✓ Satisfação garantida
+                    ⚡ A partir de R$ 9,90/mês • 🔒 100% Seguro • ✓ Satisfação garantida
                   </p>
                 </div>
               )}
 
-              <button
-                onClick={() => {
-                  setResult(null);
-                  setName1("");
-                  setName2("");
-                  setIsPremium(false);
-                }}
-                className="w-full mt-6 bg-white/20 hover:bg-white/30 text-white font-bold py-4 rounded-2xl transition-all duration-300 border border-white/30"
-              >
-                🔄 Calcular Novamente
-              </button>
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={goBack}
+                  className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-xl transition-all duration-300 border border-white/20 flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Voltar
+                </button>
+                <button
+                  onClick={goHome}
+                  className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-xl transition-all duration-300 border border-white/20 flex items-center justify-center gap-2"
+                >
+                  <Home className="w-4 h-4" />
+                  Início
+                </button>
+              </div>
             </div>
           </div>
         )}
