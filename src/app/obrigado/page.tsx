@@ -2,16 +2,25 @@
 
 import { useEffect, useState } from "react";
 import { Heart, Sparkles, CheckCircle } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ThankYouPage() {
   const [showConfetti, setShowConfetti] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
+    // Marca que o usuário completou a compra
+    localStorage.setItem("loveCalculatorPremium", "true");
+
     // Esconde o confetti após 3 segundos
     const timer = setTimeout(() => setShowConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleViewReading = () => {
+    // Redireciona para a página principal onde a leitura está salva
+    router.push("/");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-950 via-emerald-900 to-teal-950 flex items-center justify-center p-4 relative overflow-hidden">
@@ -76,11 +85,12 @@ export default function ThankYouPage() {
               </li>
             </ul>
 
-            <Link href="/">
-              <button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-5 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg text-lg">
-                📖 Ver Minha Leitura Completa
-              </button>
-            </Link>
+            <button
+              onClick={handleViewReading}
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-5 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg text-lg"
+            >
+              📖 Ver Minha Leitura Completa
+            </button>
           </div>
 
           <div className="bg-white/5 rounded-2xl p-6 border border-white/10">

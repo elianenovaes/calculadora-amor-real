@@ -30,6 +30,25 @@ export default function LoveCalculator() {
     } else {
       setTermsAccepted(true);
     }
+
+    // Verificar se o usuário completou a compra
+    const hasPurchased = localStorage.getItem("loveCalculatorPremium");
+    if (hasPurchased === "true") {
+      setIsPremium(true);
+    }
+
+    // Restaurar resultado salvo se existir
+    const savedResult = localStorage.getItem("loveCalculatorResult");
+    if (savedResult) {
+      try {
+        const parsedResult = JSON.parse(savedResult);
+        setResult(parsedResult);
+        setName1(parsedResult.name1 || "");
+        setName2(parsedResult.name2 || "");
+      } catch (e) {
+        // Ignora erro de parse
+      }
+    }
   }, []);
 
   const acceptTerms = () => {
@@ -90,17 +109,6 @@ export default function LoveCalculator() {
         textColor: "text-green-400",
       };
     }
-  };
-
-  const calculateLove = () => {
-    if (!name1.trim() || !name2.trim()) {
-      alert("Por favor, insira os dois nomes!");
-      return;
-    }
-
-    const percentage = getRandomPercentage();
-    const resultData = getResultData(percentage);
-    setResult(resultData);
   };
 
   const getPremiumContent = (level: ScoreLevel) => {
@@ -260,16 +268,41 @@ export default function LoveCalculator() {
     }
   };
 
+  const calculateLove = () => {
+    if (!name1.trim() || !name2.trim()) {
+      alert("Por favor, insira os dois nomes!");
+      return;
+    }
+
+    const percentage = getRandomPercentage();
+    const resultData = getResultData(percentage);
+    setResult(resultData);
+
+    // Salvar resultado no localStorage para persistir
+    const resultToSave = {
+      ...resultData,
+      name1,
+      name2,
+    };
+    localStorage.setItem("loveCalculatorResult", JSON.stringify(resultToSave));
+  };
+
   const handlePaymentClick = () => {
+    // Salva o resultado atual antes de redirecionar
+    if (result) {
+      const resultToSave = {
+        ...result,
+        name1,
+        name2,
+      };
+      localStorage.setItem("loveCalculatorResult", JSON.stringify(resultToSave));
+    }
+    
     // Abre o link de pagamento em nova aba
     window.open('https://pay.kirvano.com/728cfb8d-06c5-4fea-ae4e-694ce2ea0fd6', '_blank');
     
-    // Simula o desbloqueio premium após alguns segundos (em produção, isso seria feito via webhook)
-    setTimeout(() => {
-      setIsPremium(true);
-      setShowPaymentModal(false);
-      alert('🎉 Bem-vindo ao Premium! Sua análise completa foi desbloqueada.');
-    }, 3000);
+    // Fecha o modal
+    setShowPaymentModal(false);
   };
 
   const openPaymentModal = () => {
@@ -282,6 +315,9 @@ export default function LoveCalculator() {
       setName1("");
       setName2("");
       setIsPremium(false);
+      // Limpa o resultado salvo
+      localStorage.removeItem("loveCalculatorResult");
+      localStorage.removeItem("loveCalculatorPremium");
     }
   };
 
@@ -290,6 +326,9 @@ export default function LoveCalculator() {
     setName1("");
     setName2("");
     setIsPremium(false);
+    // Limpa o resultado salvo
+    localStorage.removeItem("loveCalculatorResult");
+    localStorage.removeItem("loveCalculatorPremium");
   };
 
   // Modal de Termos de Uso
@@ -480,7 +519,7 @@ export default function LoveCalculator() {
             <div className="space-y-6">
               <div>
                 <label className="block text-white font-semibold mb-2">
-                  Primeiro Nome
+                  Primeiro Nome (seu nome)
                 </label>
                 <input
                   type="text"
@@ -497,7 +536,7 @@ export default function LoveCalculator() {
 
               <div>
                 <label className="block text-white font-semibold mb-2">
-                  Segundo Nome
+                  Segundo Nome (nome do pretendente)
                 </label>
                 <input
                   type="text"
