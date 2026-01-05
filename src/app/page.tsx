@@ -105,38 +105,164 @@ export default function LoveCalculator() {
 
   const getPremiumContent = (level: ScoreLevel) => {
     if (level === "low") {
+      const obstacles = [
+        "Personalidades conflitantes. Um busca liberdade, o outro segurança. O ciúme pode se tornar um problema recorrente.",
+        "Valores fundamentais opostos. Enquanto um prioriza carreira, o outro valoriza família. Conflitos constantes sobre prioridades.",
+        "Estilos de comunicação incompatíveis. Um é direto e explosivo, o outro evita confrontos. Mal-entendidos frequentes.",
+        "Diferenças culturais ou religiosas profundas. Dificuldade em encontrar terreno comum para construir o relacionamento.",
+        "Ritmos de vida completamente diferentes. Um é noturno e aventureiro, o outro é matinal e caseiro. Pouco tempo de qualidade juntos.",
+        "Histórico de traumas não resolvidos. Bagagens emocionais pesadas que afetam a capacidade de confiar e se entregar.",
+        "Expectativas irrealistas sobre o relacionamento. Um idealiza demais, o outro é cético. Frustração constante.",
+        "Dependência emocional excessiva de um dos lados. Relacionamento desequilibrado que sufoca e gera ressentimento.",
+        "Falta de atração física genuína. Tentam forçar algo que não existe naturalmente. Intimidade forçada e desconfortável.",
+        "Objetivos de vida incompatíveis. Um quer filhos e estabilidade, o outro quer viajar e liberdade. Impasse inevitável.",
+        "Ciúme patológico e possessividade. Insegurança extrema que destrói a confiança e sufoca o parceiro.",
+        "Falta de respeito mútuo. Críticas constantes, desvalorização e falta de admiração genuína pelo outro.",
+      ];
+      
+      const futures = [
+        "Sem mudanças significativas, a relação tende a se desgastar em 6 meses. Conflitos sobre prioridades de vida serão frequentes.",
+        "Alta probabilidade de término nos próximos 3-4 meses. A tensão acumulada chegará ao ponto de ruptura.",
+        "Relacionamento insustentável a longo prazo. Máximo de 8 meses antes de um dos dois desistir completamente.",
+        "Ciclo tóxico de idas e vindas pelos próximos 12 meses. Término e reconciliação repetidos até exaustão emocional.",
+        "Futuro nebuloso com 85% de chance de separação. Apenas terapia intensiva poderia reverter o quadro.",
+        "Caminho para um relacionamento abusivo se não houver mudanças imediatas. Sinais de alerta evidentes.",
+        "Tendência a se tornarem apenas colegas de quarto em 4-5 meses. Amor se transformará em conveniência.",
+        "Probabilidade de traição emocional ou física nos próximos 6 meses. Falta de conexão abrirá espaço para terceiros.",
+        "Desgaste emocional severo para ambos. Relacionamento se tornará fonte de ansiedade e infelicidade.",
+        "Separação inevitável dentro de 1 ano. Quanto mais demorar, mais doloroso será o processo.",
+        "Risco de co-dependência tóxica. Relacionamento que prejudica o crescimento individual de ambos.",
+        "Futuro marcado por arrependimentos. Tempo investido que poderia ter sido usado para encontrar alguém compatível.",
+      ];
+      
+      const fidelities = [
+        "Taxa de Fidelidade: 42%. Risco elevado de traição emocional. A falta de conexão profunda pode levar à busca de atenção externa.",
+        "Taxa de Fidelidade: 38%. Vulnerabilidade alta a tentações externas. Insatisfação no relacionamento abre portas perigosas.",
+        "Taxa de Fidelidade: 35%. Histórico ou tendência a buscar validação fora do relacionamento. Sinais de alerta claros.",
+        "Taxa de Fidelidade: 40%. Falta de intimidade emocional aumenta risco de infidelidade. Conexão superficial é perigosa.",
+        "Taxa de Fidelidade: 33%. Um ou ambos têm perfil de risco para traição. Padrões comportamentais preocupantes.",
+        "Taxa de Fidelidade: 45%. Relacionamento não satisfaz necessidades emocionais básicas. Busca por preenchimento externo é provável.",
+        "Taxa de Fidelidade: 37%. Falta de compromisso genuíno. Relacionamento visto como temporário ou descartável.",
+        "Taxa de Fidelidade: 41%. Comunicação falha cria distância emocional. Espaço perfeito para interferências externas.",
+        "Taxa de Fidelidade: 36%. Histórico de relacionamentos instáveis. Padrão de comportamento difícil de quebrar.",
+        "Taxa de Fidelidade: 39%. Falta de respeito mútuo facilita traição. Desvalorização do parceiro é porta aberta.",
+        "Taxa de Fidelidade: 34%. Imaturidade emocional de um ou ambos. Incapacidade de lidar com compromisso sério.",
+        "Taxa de Fidelidade: 43%. Relacionamento baseado em conveniência, não amor. Fidelidade por obrigação, não escolha.",
+      ];
+      
       return {
-        obstacles:
-          "Personalidades conflitantes. Um busca liberdade, o outro segurança. O ciúme pode se tornar um problema recorrente.",
-        future:
-          "Sem mudanças significativas, a relação tende a se desgastar em 6 meses. Conflitos sobre prioridades de vida serão frequentes.",
-        fidelity:
-          "Taxa de Fidelidade: 42%. Risco elevado de traição emocional. A falta de conexão profunda pode levar à busca de atenção externa.",
+        obstacles: obstacles[Math.floor(Math.random() * obstacles.length)],
+        future: futures[Math.floor(Math.random() * futures.length)],
+        fidelity: fidelities[Math.floor(Math.random() * fidelities.length)],
       };
     } else if (level === "medium") {
+      const obstacles = [
+        "Diferenças de comunicação e expectativas. Vocês precisam aprender a se ouvir verdadeiramente para evitar mal-entendidos.",
+        "Ritmos diferentes de amadurecimento emocional. Um está pronto para compromisso, o outro ainda está se descobrindo.",
+        "Famílias com dinâmicas complicadas. Interferências externas que testam a solidez do relacionamento.",
+        "Diferenças financeiras ou de gestão de dinheiro. Conflitos sobre gastos, investimentos e prioridades econômicas.",
+        "Falta de tempo de qualidade juntos. Rotinas corridas que deixam o relacionamento em segundo plano.",
+        "Inseguranças pessoais não resolvidas. Medos e traumas que afetam a capacidade de se entregar completamente.",
+        "Diferenças no nível de demonstração de afeto. Um é mais expressivo, o outro mais reservado. Necessidade de equilíbrio.",
+        "Expectativas diferentes sobre o futuro. Planos de vida que precisam ser alinhados para funcionar.",
+        "Dificuldade em resolver conflitos de forma saudável. Tendência a evitar ou escalar discussões.",
+        "Falta de hobbies ou interesses em comum. Necessidade de construir mais pontos de conexão.",
+        "Diferenças no círculo social. Amigos que não se misturam bem, criando mundos separados.",
+        "Desafios de intimidade física ou emocional. Necessidade de trabalhar a conexão em níveis mais profundos.",
+      ];
+      
+      const futures = [
+        "Com esforço mútuo, há 60% de chance de construir algo sólido. Terapia de casal pode ser decisiva nos próximos 12 meses.",
+        "Relacionamento com potencial, mas requer trabalho consciente. Próximos 6 meses serão cruciais para definir o rumo.",
+        "Futuro depende da disposição de ambos em crescer juntos. 55% de chance de sucesso com comunicação aberta.",
+        "Possibilidade de evolução para relacionamento maduro e estável. Necessário investimento emocional nos próximos 8-10 meses.",
+        "Caminho incerto, mas não impossível. 50% de chance de superar obstáculos se houver compromisso real.",
+        "Relacionamento que pode surpreender positivamente. Com ajustes, há 65% de chance de futuro promissor.",
+        "Próximos 12 meses definirão tudo. Período de testes que mostrará se vale a pena continuar investindo.",
+        "Potencial para relacionamento duradouro se ambos amadurecerem juntos. 58% de probabilidade de sucesso.",
+        "Futuro moderadamente positivo. Requer paciência e disposição para trabalhar diferenças.",
+        "Relacionamento que pode se fortalecer com o tempo. 62% de chance se superarem fase atual de ajustes.",
+        "Possibilidade de construir algo bonito, mas não será fácil. Esforço conjunto é fundamental.",
+        "Futuro depende de decisões conscientes nos próximos meses. 57% de chance com escolhas certas.",
+      ];
+      
+      const fidelities = [
+        "Taxa de Fidelidade: 68%. Estável, mas requer atenção constante. Momentos de crise podem abalar a confiança.",
+        "Taxa de Fidelidade: 72%. Comprometimento moderado. Necessário cultivar conexão para manter fidelidade sólida.",
+        "Taxa de Fidelidade: 65%. Base razoável, mas vulnerável em períodos de distância ou conflito.",
+        "Taxa de Fidelidade: 70%. Lealdade presente, mas não inquestionável. Trabalho contínuo é necessário.",
+        "Taxa de Fidelidade: 67%. Fidelidade dependente da qualidade da comunicação e resolução de conflitos.",
+        "Taxa de Fidelidade: 73%. Comprometimento bom, mas pode ser testado em momentos de estresse.",
+        "Taxa de Fidelidade: 69%. Estabilidade moderada. Atenção às necessidades do parceiro é crucial.",
+        "Taxa de Fidelidade: 71%. Base sólida que precisa ser nutrida constantemente para se manter forte.",
+        "Taxa de Fidelidade: 66%. Fidelidade razoável, mas suscetível a influências externas em momentos fracos.",
+        "Taxa de Fidelidade: 74%. Comprometimento acima da média. Manutenção da intimidade é chave.",
+        "Taxa de Fidelidade: 68%. Lealdade presente, mas requer investimento emocional contínuo.",
+        "Taxa de Fidelidade: 70%. Estabilidade boa que pode melhorar com fortalecimento do vínculo.",
+      ];
+      
       return {
-        obstacles:
-          "Diferenças de comunicação e expectativas. Vocês precisam aprender a se ouvir verdadeiramente para evitar mal-entendidos.",
-        future:
-          "Com esforço mútuo, há 60% de chance de construir algo sólido. Terapia de casal pode ser decisiva nos próximos 12 meses.",
-        fidelity:
-          "Taxa de Fidelidade: 68%. Estável, mas requer atenção constante. Momentos de crise podem abalar a confiança.",
+        obstacles: obstacles[Math.floor(Math.random() * obstacles.length)],
+        future: futures[Math.floor(Math.random() * futures.length)],
+        fidelity: fidelities[Math.floor(Math.random() * fidelities.length)],
       };
     } else {
+      const obstacles = [
+        "Poucos obstáculos reais. Vibrações em sintonia. Vocês crescem juntos e se complementam naturalmente.",
+        "Desafios mínimos e facilmente superáveis. Comunicação fluida e respeito mútuo são a base sólida.",
+        "Obstáculos externos podem surgir, mas a união de vocês é forte o suficiente para enfrentar qualquer tempestade.",
+        "Diferenças existem, mas são vistas como complementares, não conflitantes. Equilíbrio perfeito.",
+        "Pouquíssimos pontos de atrito. Quando surgem, são resolvidos com maturidade e amor.",
+        "Conexão tão profunda que obstáculos se tornam oportunidades de crescimento conjunto.",
+        "Harmonia natural que facilita a superação de qualquer desafio. Vocês são um time imbatível.",
+        "Obstáculos praticamente inexistentes. Relacionamento flui com leveza e naturalidade.",
+        "Desafios são raros e, quando aparecem, fortalecem ainda mais o vínculo entre vocês.",
+        "Sintonia tão grande que problemas são resolvidos antes mesmo de se tornarem obstáculos reais.",
+        "Poucos desafios significativos. Vocês têm a química e a maturidade para lidar com tudo.",
+        "Obstáculos mínimos. Relacionamento baseado em confiança, respeito e amor genuíno.",
+      ];
+      
+      const futures = [
+        "Futuro promissor! 89% de chance de relacionamento duradouro. Casamento e família são caminhos naturais para vocês.",
+        "Previsão extremamente positiva. 92% de probabilidade de construírem uma vida feliz juntos.",
+        "Futuro brilhante pela frente. Vocês têm tudo para serem aquele casal que inspira os outros.",
+        "Relacionamento com potencial para durar décadas. 90% de chance de envelhecerem juntos e felizes.",
+        "Caminho claro para compromisso sério. 88% de probabilidade de casamento nos próximos 2-3 anos.",
+        "Futuro repleto de amor, cumplicidade e realizações conjuntas. 91% de chance de sucesso a longo prazo.",
+        "Vocês têm o que poucos encontram: amor verdadeiro e compatibilidade real. 93% de chance de felicidade duradoura.",
+        "Previsão de relacionamento sólido e feliz. 87% de probabilidade de construírem família e legado juntos.",
+        "Futuro promissor com crescimento mútuo constante. 90% de chance de parceria para a vida toda.",
+        "Relacionamento destinado ao sucesso. 89% de probabilidade de superarem todos os desafios juntos.",
+        "Futuro radiante. Vocês são a prova de que almas gêmeas existem. 94% de chance de felicidade eterna.",
+        "Previsão de vida compartilhada cheia de amor e conquistas. 91% de probabilidade de relacionamento exemplar.",
+      ];
+      
+      const fidelities = [
+        "Taxa de Fidelidade: 94%. Conexão profunda e genuína. A lealdade é mútua e baseada em respeito e amor verdadeiro.",
+        "Taxa de Fidelidade: 96%. Comprometimento inabalável. Vocês são exemplo de fidelidade e devoção.",
+        "Taxa de Fidelidade: 93%. Lealdade sólida como rocha. Confiança plena e merecida entre vocês.",
+        "Taxa de Fidelidade: 95%. Fidelidade natural e sem esforço. Vocês só têm olhos um para o outro.",
+        "Taxa de Fidelidade: 97%. Nível excepcional de comprometimento. Relacionamento blindado contra tentações.",
+        "Taxa de Fidelidade: 92%. Lealdade profunda baseada em amor genuíno e respeito mútuo.",
+        "Taxa de Fidelidade: 94%. Fidelidade inquestionável. Vocês construíram uma base de confiança absoluta.",
+        "Taxa de Fidelidade: 96%. Comprometimento exemplar. Outros casais deveriam se inspirar em vocês.",
+        "Taxa de Fidelidade: 93%. Lealdade que vem do coração, não da obrigação. Amor verdadeiro e puro.",
+        "Taxa de Fidelidade: 95%. Fidelidade natural e espontânea. Vocês são verdadeiramente um para o outro.",
+        "Taxa de Fidelidade: 98%. Nível raro de comprometimento. Relacionamento praticamente à prova de traição.",
+        "Taxa de Fidelidade: 94%. Lealdade inabalável. Confiança mútua que é a inveja de muitos casais.",
+      ];
+      
       return {
-        obstacles:
-          "Poucos obstáculos reais. Vibrações em sintonia. Vocês crescem juntos e se complementam naturalmente.",
-        future:
-          "Futuro promissor! 89% de chance de relacionamento duradouro. Casamento e família são caminhos naturais para vocês.",
-        fidelity:
-          "Taxa de Fidelidade: 94%. Conexão profunda e genuína. A lealdade é mútua e baseada em respeito e amor verdadeiro.",
+        obstacles: obstacles[Math.floor(Math.random() * obstacles.length)],
+        future: futures[Math.floor(Math.random() * futures.length)],
+        fidelity: fidelities[Math.floor(Math.random() * fidelities.length)],
       };
     }
   };
 
-  const handlePaymentClick = (plan: 'monthly' | 'annual') => {
+  const handlePaymentClick = () => {
     // Abre o link de pagamento em nova aba
-    window.open('https://pay.kirvano.com/9b7ef0c7-fbe3-4121-81e3-098403e5a506', '_blank');
+    window.open('https://pay.kirvano.com/728cfb8d-06c5-4fea-ae4e-694ce2ea0fd6', '_blank');
     
     // Simula o desbloqueio premium após alguns segundos (em produção, isso seria feito via webhook)
     setTimeout(() => {
@@ -223,7 +349,7 @@ export default function LoveCalculator() {
   if (showPaymentModal) {
     return (
       <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-3xl p-8 max-w-2xl w-full border-2 border-pink-400/50 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-3xl p-8 max-w-xl w-full border-2 border-pink-400/50 shadow-2xl relative max-h-[90vh] overflow-y-auto">
           <button
             onClick={() => setShowPaymentModal(false)}
             className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
@@ -234,122 +360,76 @@ export default function LoveCalculator() {
           <div className="text-center mb-8">
             <TrendingUp className="w-16 h-16 mx-auto text-yellow-400 mb-4" />
             <h2 className="text-3xl font-bold text-white mb-2">
-              Escolha Seu Plano Premium
+              Desbloqueie Sua Análise Completa
             </h2>
-            <p className="text-pink-200">Desbloqueie todos os segredos do seu relacionamento</p>
+            <p className="text-pink-200">Descubra todos os segredos do seu relacionamento</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {/* Plano Mensal */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-white/20 hover:border-yellow-400/50 transition-all duration-300 transform hover:scale-105">
-              <div className="text-center mb-4">
-                <h3 className="text-2xl font-bold text-white mb-2">Plano Mensal</h3>
-                <div className="mb-4">
-                  <p className="text-white/60 text-sm line-through">De R$ 19,90</p>
-                  <p className="text-5xl font-bold text-yellow-400">R$ 9,90</p>
-                  <p className="text-white/80 text-sm mt-1">/mês</p>
-                </div>
-                <div className="bg-green-500/20 border border-green-400/50 rounded-lg py-2 px-4 inline-block">
-                  <p className="text-green-300 font-bold text-sm">🎉 50% de desconto!</p>
-                </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border-2 border-yellow-400/50 mb-6">
+            <div className="text-center mb-6">
+              <div className="mb-4">
+                <p className="text-white/60 text-sm">Pagamento único</p>
+                <p className="text-6xl font-bold text-yellow-400 my-2">R$ 4,99</p>
+                <p className="text-white/80 text-sm">Uma leitura completa</p>
               </div>
-
-              <ul className="text-white/90 text-sm space-y-3 mb-6">
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Análise completa de obstáculos</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Previsão de futuro detalhada</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Taxa de fidelidade revelada</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Acesso ilimitado por 30 dias</span>
-                </li>
-              </ul>
-
-              <button
-                onClick={() => handlePaymentClick('monthly')}
-                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                Assinar Mensal
-              </button>
+              <div className="bg-green-500/20 border border-green-400/50 rounded-lg py-2 px-4 inline-block">
+                <p className="text-green-300 font-bold text-sm">🎉 Acesso instantâneo!</p>
+              </div>
             </div>
 
-            {/* Plano Anual */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border-2 border-yellow-400/50 hover:border-yellow-400 transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold py-1 px-4 rounded-bl-lg">
-                MAIS POPULAR
-              </div>
+            <ul className="text-white/90 text-sm space-y-3 mb-6">
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span>Análise completa dos obstáculos ocultos</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span>Previsão de futuro detalhada e personalizada</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span>Taxa de fidelidade revelada com precisão</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span>Acesso imediato após pagamento</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span>Pagamento único, sem mensalidades</span>
+              </li>
+            </ul>
 
-              <div className="text-center mb-4 mt-4">
-                <h3 className="text-2xl font-bold text-white mb-2">Plano Anual</h3>
-                <div className="mb-4">
-                  <p className="text-white/60 text-sm line-through">De R$ 238,80</p>
-                  <p className="text-5xl font-bold text-yellow-400">R$ 108,00</p>
-                  <p className="text-white/80 text-sm mt-1">/ano</p>
-                  <p className="text-green-300 text-xs mt-2">Apenas R$ 9,00/mês</p>
-                </div>
-                <div className="bg-green-500/20 border border-green-400/50 rounded-lg py-2 px-4 inline-block">
-                  <p className="text-green-300 font-bold text-sm">🔥 Economize 55%!</p>
-                </div>
-              </div>
-
-              <ul className="text-white/90 text-sm space-y-3 mb-6">
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Tudo do plano mensal</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Acesso ilimitado por 12 meses</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Economia de R$ 10,80</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Melhor custo-benefício</span>
-                </li>
-              </ul>
-
-              <button
-                onClick={() => handlePaymentClick('annual')}
-                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
-              >
-                Assinar Anual
-              </button>
-            </div>
+            <button
+              onClick={handlePaymentClick}
+              className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg text-lg"
+            >
+              🔓 Comprar Análise Completa
+            </button>
           </div>
 
-          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-6">
             <h4 className="text-white font-bold text-center mb-4">O que você vai receber:</h4>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="text-center">
                 <Lock className="w-8 h-8 mx-auto text-yellow-400 mb-2" />
-                <p className="text-white/90 text-sm font-semibold">Análise dos Obstáculos</p>
+                <p className="text-white/90 text-xs font-semibold">Análise dos Obstáculos</p>
                 <p className="text-white/60 text-xs mt-1">Descubra os desafios ocultos</p>
               </div>
               <div className="text-center">
                 <Sparkles className="w-8 h-8 mx-auto text-purple-400 mb-2" />
-                <p className="text-white/90 text-sm font-semibold">Previsão de Futuro</p>
+                <p className="text-white/90 text-xs font-semibold">Previsão de Futuro</p>
                 <p className="text-white/60 text-xs mt-1">Veja o que o destino reserva</p>
               </div>
               <div className="text-center">
                 <Shield className="w-8 h-8 mx-auto text-blue-400 mb-2" />
-                <p className="text-white/90 text-sm font-semibold">Taxa de Fidelidade</p>
+                <p className="text-white/90 text-xs font-semibold">Taxa de Fidelidade</p>
                 <p className="text-white/60 text-xs mt-1">Análise real de lealdade</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 flex gap-3">
+          <div className="flex gap-3">
             <button
               onClick={goBack}
               className="flex-1 bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-xl transition-all duration-300 border border-white/20 flex items-center justify-center gap-2"
@@ -534,14 +614,20 @@ export default function LoveCalculator() {
                     Descubra os segredos ocultos do seu relacionamento! Veja os
                     obstáculos reais, previsão de futuro e taxa de fidelidade.
                   </p>
+                  <div className="mb-4">
+                    <p className="text-yellow-100 text-2xl font-bold">
+                      Apenas R$ 4,99
+                    </p>
+                    <p className="text-yellow-200 text-xs">Pagamento único • Acesso instantâneo</p>
+                  </div>
                   <button
                     onClick={openPaymentModal}
                     className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
-                    🔓 Fazer Upgrade para Premium
+                    🔓 Comprar Análise Completa
                   </button>
                   <p className="text-yellow-300 text-xs mt-3">
-                    ⚡ A partir de R$ 9,90/mês • 🔒 100% Seguro • ✓ Satisfação garantida
+                    ⚡ Acesso instantâneo • 🔒 100% Seguro • ✓ Satisfação garantida
                   </p>
                 </div>
               )}
